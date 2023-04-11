@@ -7,7 +7,7 @@ const respErros = document.getElementById("outErros"); // referência ao texto d
 const respChances = document.getElementById("outChances"); // referência ao texto de chances
 const respDicas = document.getElementById("outDica"); // referência ao texto de dicas
 const erros = []; // vetor para salvar os erros
-const chances = 4; // contador de chances
+const chances = 5; // contador de chances
 let flag = false; // gambiarra
 let sorteado; // gambiarra
 
@@ -19,6 +19,7 @@ async function pesquisarPersonagem(){
     const dados = await fetch(url); // busca os dados na url
     const personagem = await dados.json(); // salva os dados em formato json
     
+    console.log(personagem.name)
     return personagem; // retorna o valor sorteado
 }
 
@@ -44,12 +45,14 @@ inEnviar.addEventListener("click", async (e) => {
                 respChances.innerText = `${numChances}`; // plota a quantidade de tentativas restantes
     
                 if (numChances === 0) { // caso não tenha mais chances, desabilita o botão e informa o personagem
-                    alert("Suas chances acabaram");
+                    alert("Suas chances acabaram");             
                     inEnviar.disabled = true;
-                    respDicas.innerText = `Gamer Over. O personagem sorteado era: ${sorteado.img}\n${sorteado.name}`
+                    respDicas.innerText = `Gamer Over. O personagem sorteado era: ${sorteado.name}`
                 } else { // caso ainda restem chances, dá dicas sobre o personagem
-                    if (numChances == 3) { 
+                    if (numChances == 4) { 
                         respDicas.innerText = `O personagem é da raça: ${sorteado.species}\n`;
+                    } else if (numChances == 3) {
+                        respDicas.innerText += `O persongagem é do sexo: ${sorteado.gender}\n`
                     } else if (numChances == 2) {
                         respDicas.innerText += `O personagem está: ${sorteado.status}\n`;
                     } else if (numChances == 1) {
